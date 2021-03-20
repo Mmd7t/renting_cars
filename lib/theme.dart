@@ -35,7 +35,7 @@ var commonTheme = ThemeData(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         color: Colors.redAccent,
-        width: 1.5,
+        width: 1.3,
       ),
     ),
   ),
