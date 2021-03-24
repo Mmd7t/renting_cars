@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ThemeProvider extends ChangeNotifier {
-  bool _darkTheme = false;
+/// provides the currently selected theme, saves changed theme preferences to disk
+class ThemeController extends ChangeNotifier {
+  static const themePrefKey = 'theme';
 
-  SharedPreferences _prefs;
-
-  bool get theme => _darkTheme;
-
-  ThemeProvider() {
-    _loadPrefs();
+  ThemeController(this._prefs) {
+    // load theme from preferences on initialization
+    _currentTheme = _prefs.getString(themePrefKey) ?? 'light';
   }
 
-  setDarkTheme(theme) {
-    _darkTheme = theme;
-    _savePrefs();
+  final SharedPreferences _prefs;
+  String _currentTheme;
+
+  /// get the current theme
+  String get currentTheme => _currentTheme;
+
+  void setTheme(String theme) {
+    _currentTheme = theme;
+
+    // notify the app that the theme was changed
     notifyListeners();
+
+    // store updated theme on disk
+    _prefs.setString(themePrefKey, theme);
   }
 
-  initPrefs() async {
-    if (_prefs == null) {
-      _prefs = await SharedPreferences.getInstance();
-    }
+  /// get the controller from any page of your app
+  static ThemeController of(BuildContext context) {
+    final provider =
+        context.dependOnInheritedWidgetOfExactType<ThemeControllerProvider>();
+    return provider.controller;
   }
+}
 
-  _savePrefs() async {
-    await initPrefs();
-    _prefs.setBool('theme', _darkTheme);
-  }
+/// provides the theme controller to any page of your app
+class ThemeControllerProvider extends InheritedWidget {
+  const ThemeControllerProvider({Key key, this.controller, Widget child})
+      : super(key: key, child: child);
 
-  _loadPrefs() async {
-    await initPrefs();
-    _darkTheme = _prefs.getBool('theme') ?? false;
-    notifyListeners();
-  }
+  final ThemeController controller;
+
+  @override
+  bool updateShouldNotify(ThemeControllerProvider old) =>
+      controller != old.controller;
 }

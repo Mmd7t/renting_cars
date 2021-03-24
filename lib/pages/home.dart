@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:renting_cars/pages/rent_car/show_rent_cars.dart';
 import 'package:renting_cars/providers/theme_provider.dart';
 import 'package:renting_cars/widgets/global_appbar.dart';
@@ -49,7 +48,7 @@ class ContainBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
+    var themeController = ThemeController.of(context);
     final radius = BorderRadius.circular(20);
 
     return InkWell(
@@ -62,12 +61,14 @@ class ContainBox extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: radius,
-          color: (theme.theme) ? c1 : Theme.of(context).primaryColor,
+          color: (themeController.currentTheme == "dark")
+              ? c1
+              : Theme.of(context).primaryColor,
         ),
         child: Text(
           title,
           style: Theme.of(context).textTheme.headline6.copyWith(
-                color: (theme.theme)
+                color: (themeController.currentTheme == "dark")
                     ? Theme.of(context).primaryColor
                     : Colors.white,
                 fontWeight: FontWeight.bold,

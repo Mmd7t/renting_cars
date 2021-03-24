@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:renting_cars/constants.dart';
 import 'package:renting_cars/pages/settings/settings.dart';
-import 'package:renting_cars/providers/accent_color_provider.dart';
 
 class GlobalAppBar extends PreferredSize {
   final bool isHome;
@@ -19,7 +16,6 @@ class GlobalAppBar extends PreferredSize {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Provider.of<AccentColorProvider>(context);
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0.0,
@@ -35,7 +31,7 @@ class GlobalAppBar extends PreferredSize {
           ? const SizedBox()
           : IconButton(
               icon: const Icon(Icons.arrow_back),
-              color: colorsMap[accentColor.color],
+              color: Theme.of(context).accentColor,
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -44,7 +40,7 @@ class GlobalAppBar extends PreferredSize {
         (isSettings)
             ? const SizedBox()
             : IconButton(
-                color: colorsMap[accentColor.color],
+                color: Theme.of(context).accentColor,
                 icon: const Icon(Icons.settings),
                 onPressed: () {
                   Navigator.of(context).pushNamed(Settings.routeName);

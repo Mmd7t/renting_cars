@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:renting_cars/constants.dart';
 import 'package:renting_cars/db/db.dart';
 import 'package:renting_cars/models/rent_car.dart';
@@ -61,7 +60,6 @@ class _AddRentDataPageState extends State<AddRentDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Provider.of<AccentColorProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -73,7 +71,7 @@ class _AddRentDataPageState extends State<AddRentDataPage> {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: colorsMap[accentColor.color],
+          color: Theme.of(context).accentColor,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -227,7 +225,7 @@ class _AddRentDataPageState extends State<AddRentDataPage> {
                                       right: 0,
                                       child: CircleAvatar(
                                         backgroundColor:
-                                            colorsMap[accentColor.color],
+                                            Theme.of(context).accentColor,
                                         maxRadius: 15,
                                         child: IconButton(
                                           icon: Icon(Icons.close),
@@ -269,7 +267,7 @@ class _AddRentDataPageState extends State<AddRentDataPage> {
                                       right: 0,
                                       child: CircleAvatar(
                                         backgroundColor:
-                                            colorsMap[accentColor.color],
+                                            Theme.of(context).accentColor,
                                         maxRadius: 15,
                                         child: IconButton(
                                           icon: Icon(Icons.close),

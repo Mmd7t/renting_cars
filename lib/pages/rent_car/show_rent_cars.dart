@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:renting_cars/db/db.dart';
 import 'package:renting_cars/models/rent_car.dart';
 import 'package:renting_cars/models/utility.dart';
@@ -24,8 +23,7 @@ class _ShowRentCarsState extends State<ShowRentCars> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
-    var accentColor = Provider.of<AccentColorProvider>(context);
+    var themeController = ThemeController.of(context);
 
     if (rentCarsList == null) {
       rentCarsList = [];
@@ -47,7 +45,7 @@ class _ShowRentCarsState extends State<ShowRentCars> {
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: (theme.theme)
+                      color: (themeController.currentTheme == "dark")
                           ? c1
                           : Theme.of(context).primaryColor.withOpacity(0.3),
                     ),
@@ -118,7 +116,7 @@ class _ShowRentCarsState extends State<ShowRentCars> {
                                   updateListView();
                                 }
                               },
-                              color: colorsMap[accentColor.color],
+                              color: Theme.of(context).accentColor,
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete),
@@ -143,7 +141,7 @@ class _ShowRentCarsState extends State<ShowRentCars> {
             }
           }),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: colorsMap[accentColor.color],
+        backgroundColor: Theme.of(context).accentColor,
         child: const Icon(Icons.add),
         onPressed: () async {
           bool result = await Navigator.of(context)

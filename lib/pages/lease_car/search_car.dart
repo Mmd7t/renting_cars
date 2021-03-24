@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:renting_cars/db/db.dart';
 import 'package:renting_cars/models/rent_car.dart';
 import 'package:renting_cars/models/utility.dart';
@@ -22,7 +21,7 @@ class _SearchCarState extends State<SearchCar> {
   DB database = DB.db;
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
+    var themeController = ThemeController.of(context);
     return Scaffold(
       appBar: const GlobalAppBar(title: "Search Car"),
       body: SingleChildScrollView(
@@ -62,7 +61,7 @@ class _SearchCarState extends State<SearchCar> {
                           margin: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: (theme.theme)
+                            color: (themeController.currentTheme == "dark")
                                 ? c1
                                 : Theme.of(context)
                                     .primaryColor

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:renting_cars/providers/accent_color_provider.dart';
 import 'package:renting_cars/providers/theme_provider.dart';
 
 import '../constants.dart';
@@ -12,8 +10,7 @@ class AddImageBox extends StatelessWidget {
   const AddImageBox({Key key, this.text, this.onPressed}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
-    var accentColor = Provider.of<AccentColorProvider>(context);
+    var themeController = ThemeController.of(context);
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       enableFeedback: true,
@@ -24,10 +21,10 @@ class AddImageBox extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.28,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: (theme.theme)
+          border: (themeController.currentTheme == "dark")
               ? Border.fromBorderSide(BorderSide.none)
-              : Border.all(color: colorsMap[accentColor.color]),
-          color: (theme.theme) ? c1 : Colors.white,
+              : Border.all(color: Theme.of(context).accentColor),
+          color: (themeController.currentTheme == "dark") ? c1 : Colors.white,
         ),
         child: LayoutBuilder(
           builder: (context, constraints) => Column(
@@ -37,7 +34,7 @@ class AddImageBox extends StatelessWidget {
               Text(
                 text,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      color: colorsMap[accentColor.color],
+                      color: Theme.of(context).accentColor,
                     ),
                 textAlign: TextAlign.center,
               ),

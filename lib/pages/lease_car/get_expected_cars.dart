@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:renting_cars/db/db.dart';
 import 'package:renting_cars/models/lease_car.dart';
 import 'package:renting_cars/models/utility.dart';
 import 'package:renting_cars/pages/lease_car/add_lease_data.dart';
 import 'package:renting_cars/pages/lease_car/search_car.dart';
-import 'package:renting_cars/providers/accent_color_provider.dart';
 import 'package:renting_cars/providers/theme_provider.dart';
 import 'package:renting_cars/widgets/global_appbar.dart';
 import 'package:sqflite/sqflite.dart';
@@ -26,9 +24,7 @@ class _GetExpectedCarsState extends State<GetExpectedCars> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context);
-    var accentColor = Provider.of<AccentColorProvider>(context);
-
+    var themeController = ThemeController.of(context);
     if (leaseCarsList == null) {
       leaseCarsList = [];
       updateListView();
@@ -48,7 +44,7 @@ class _GetExpectedCarsState extends State<GetExpectedCars> {
                     margin: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: (theme.theme)
+                      color: (themeController.currentTheme == "dark")
                           ? c1
                           : Theme.of(context).primaryColor.withOpacity(0.3),
                     ),
@@ -107,7 +103,7 @@ class _GetExpectedCarsState extends State<GetExpectedCars> {
                                   updateListView();
                                 }
                               },
-                              color: colorsMap[accentColor.color],
+                              color: Theme.of(context).accentColor,
                             ),
 /*-----------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------  Delete Icon  -------------------------------------------*/
@@ -137,7 +133,7 @@ class _GetExpectedCarsState extends State<GetExpectedCars> {
                                   ),
                                 );
                               },
-                              color: colorsMap[accentColor.color],
+                              color: Theme.of(context).accentColor,
                             ),
                           ],
                         ),
@@ -156,7 +152,7 @@ class _GetExpectedCarsState extends State<GetExpectedCars> {
 /*-------------------------------------------  Add Data Btn  ------------------------------------------*/
 /*-----------------------------------------------------------------------------------------------------*/
       floatingActionButton: FloatingActionButton(
-        backgroundColor: colorsMap[accentColor.color],
+        backgroundColor: Theme.of(context).accentColor,
         child: const Icon(Icons.add),
         onPressed: () async {
           bool result = await Navigator.of(context).push(

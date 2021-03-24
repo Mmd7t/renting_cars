@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:renting_cars/db/db.dart';
 import 'package:renting_cars/models/lease_car.dart';
 import 'package:renting_cars/models/utility.dart';
@@ -68,7 +67,6 @@ class _EditLeaseDataPageState extends State<EditLeaseDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Provider.of<AccentColorProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -80,7 +78,7 @@ class _EditLeaseDataPageState extends State<EditLeaseDataPage> {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: colorsMap[accentColor.color],
+          color: Theme.of(context).accentColor,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -217,7 +215,7 @@ class _EditLeaseDataPageState extends State<EditLeaseDataPage> {
                               left: 0,
                               right: 0,
                               child: CircleAvatar(
-                                backgroundColor: colorsMap[accentColor.color],
+                                backgroundColor: Theme.of(context).accentColor,
                                 maxRadius: 15,
                                 child: IconButton(
                                   icon: Icon(Icons.close),
