@@ -37,7 +37,9 @@ class DB {
               priceInMonth TEXT,
               city TEXT)
             ''');
+/*------------------------------------------------------------------------------------------*/
 /*------------------------------------  Lease DB Table  ------------------------------------*/
+/*------------------------------------------------------------------------------------------*/
         await db.execute('''
             CREATE TABLE $leaseDbTable(
               id INTEGER PRIMARY KEY,
@@ -85,17 +87,6 @@ class DB {
     db.delete(rentDbTable, where: "id = ?", whereArgs: [id]);
   }
   /*-----------------------  Get Last Object from Rent DB Table  ---------------------------*/
-
-  // getSpecifiedRentData(cityName, carName) async {
-  //   final db = await database;
-  //   var res = await db.query(rentDbTable,
-  //       orderBy: 'id DESC',
-  //       where: "city = ?,carName = ?",
-  //       whereArgs: [cityName, carName]);
-  //   List<RentCar> list =
-  //       res.isNotEmpty ? res.map((c) => RentCar.fromMap(c)).toList() : [];
-  //   return list;
-  // }
 
   getSpecifiedRentData2(cityName, carName) async {
     final db = await database;
